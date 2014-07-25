@@ -1220,8 +1220,11 @@ class Redis {
   protected function processSerializedResponse() {
     if ($this->mode === self::ATOMIC) {
       $resp = $this->sockReadData($type);
-      return (($type === self::TYPE_LINE) OR ($type === self::TYPE_BULK))
-             ? $this->unserialize($resp) : null;
+      if ( ($type === self::TYPE_LINE) OR ($type === self::TYPE_BULK) ) {
+        return $resp !== null ? $this->unserialize($resp) : false ;
+      } else {
+        return null;
+      }
     }
     $this->multiHandler[] = [ 'cb' => [$this,'processSerializedResponse'] ];
     if (($this->mode === self::MULTI) && !$this->processQueuedResponse()) {

@@ -24,6 +24,7 @@ var_dump($r->multi()
            ->strlen($key)
            ->delete($key)
            ->exists($key)
+           ->get($key)
            ->exec());
 
 echo "Pipeline\n";
@@ -35,5 +36,6 @@ var_dump($r->pipeline()
            ->strlen($key)
            ->delete($key)
            ->exists($key)
+           ->get($key)
            ->exec());
 
